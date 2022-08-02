@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>JSW Bank</title>
+<link rel="stylesheet" href="./CSS/style.css">
+</head>
+<body>
+<center><h1 >Welcome to JSW Bank</h1></center>
+<div class=Container>
+	
+	<div class ="card">
+		<h2>Log in</h2>
+	<div class=LoginForm >
+		<form action="./LoginServlet" method="post">
+	  		<label for="customer_id">Customer Id:</label><br>
+	  		<input type="number" id="customer_id" name="customer_id" value=""><br>
+			<label for="password">Password:</label><br>
+			<input type="password" id="password" name="password" value=""><br><br>
+			<input type="submit" value="Login">
+	</form> 
+	</div>
+	</div>
+	
+	<div class ="card">
+		<div class=SignupForm>
+	<h2>Sign Up</h2>
+		<form action="./SignupServlet" method="post">
+	  		<label for="signup_customer_id">Customer Id:</label><br>
+	  		<input type="number" id="signup_customer_id" name="signup_customer_id" value=""><br>
+	  		<label for="signup_customer_name">Customer Name:</label><br>
+	  		<input type="text" id="signup_customer_name" name="signup_customer_name" value=""><br>
+			<label for="signup_password">Password:</label><br>
+			<input type="password" id="signup_password" name="signup_password" value=""><br><br>
+			<input type="submit" value="Signup">
+	</form> 
+	</div>
+	</div>
+	
+</div>
+</body>
+</html>

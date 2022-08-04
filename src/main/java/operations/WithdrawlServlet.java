@@ -21,38 +21,38 @@ public class WithdrawlServlet extends HttpServlet {
        	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String entered_amount  = request.getParameter("to_withdraw");
+		String enteredAmount  = request.getParameter("to_withdraw");
 		PrintWriter out = response.getWriter();
 		
 		// Validation that the withdraw field should not be empty
-		if( entered_amount =="") {
+		if( enteredAmount =="") {
 			out.print("<body><center><div style=padding:50px;><h1>Please Enter amount to Withdrw</h1></div></center></body>");
 		}
-		if(Integer.parseInt(entered_amount)<0) {
+		if(Integer.parseInt(enteredAmount)<0) {
 			out.print("<body><center><div style=padding:50px;><h1>Anmount cannot be less then 0</h1></div></center></body>");
 		}
-		//User input validtion
-		if(Integer.valueOf(entered_amount)<0 && entered_amount == "") {
+		//User input validation
+		if(Integer.valueOf(enteredAmount)<0 && enteredAmount == "") {
 			System.out.println("Please enter valid amount");
 		}
 		
 		else {
 			
 			//Getting the details of logged in customer
-			int current_balance = UserAccess.getAmount();
-			int current_user = UserAccess.getCustomer_id();
+			int currentBalance = UserAccess.getAmount();
+			int currentUser = UserAccess.getCustomer_id();
 			
 			//Check if the user has sufficient balance to withdraw
-			if(current_balance < Integer.valueOf(entered_amount)) {
+			if(currentBalance < Integer.valueOf(enteredAmount)) {
 				out.print("<html><head><link rel=\"stylesheet\" href=\"./CSS/style.css\"></head><body><center><div class = card><div style= padding-top:10px;><h2>Low Balance, Cannot Withdraw</h2></div></div></center><</body><html>");
 			}
 			else {
-				int to_be_inserted = current_balance - Integer.valueOf(entered_amount);
+				int to_be_inserted = currentBalance - Integer.valueOf(enteredAmount);
 				try {
 					Connection conn = SqlConnection.initializeDatabase();
 					System.out.println("Object from DepositServlet: "+conn);
 					
-					PreparedStatement update_query_stmt = conn.prepareStatement("UPDATE userData SET balance = "+to_be_inserted+" WHERE customer_id= "+current_user+";");
+					PreparedStatement update_query_stmt = conn.prepareStatement("UPDATE userData SET balance = "+to_be_inserted+" WHERE customer_id= "+currentUser+";");
 					update_query_stmt.executeUpdate();
 					
 				}catch(Exception e) {System.out.println("");}

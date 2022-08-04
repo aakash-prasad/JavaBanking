@@ -2,7 +2,7 @@ package landing;
 
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 // Once the user lands at the landing page and login this class will get called
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -26,40 +26,39 @@ public class LoginServlet extends HttpServlet {
 			System.out.println(con);
 			PrintWriter out = response.getWriter();
 			//Getting the inputs entered by the user in the form:
-			String entered_id  = request.getParameter("customer_id");
-			System.out.println("The id entered by user is: "+entered_id);
-			String entered_password  = request.getParameter("password");
-			System.out.println("The password entered by user is: "+entered_password);
+			String enteredId  = request.getParameter("customer_id");
+			String enteredPassword  = request.getParameter("password");
 			
 			//Input field validation if the user has entered data properly
-			if(entered_id == "") {
+			if(enteredId == "") {
 				out.print("<body><center><div style=padding:50px;><h1>Customer id cannot be blank</h1></div></center></body>");
 			}
-			if(entered_password == "") {
+			if(enteredPassword == "") {
 				out.print("<body><center><div style=padding:50px;><h1>Password cannot be blank</h1></div></center></body>");
 			}
 			
 			//check if the id is matching with any in the database
 			try {
-				PreparedStatement check_id_exist = con.prepareStatement("SELECT * FROM userData WHERE "+entered_id+" in (customer_id)");
-				ResultSet id_exist = check_id_exist.executeQuery();
+				PreparedStatement checkIdExist = con.prepareStatement("SELECT * FROM userData WHERE "+enteredId+" in (customer_id)");
+				ResultSet idExist = checkIdExist.executeQuery();
 				
-				if(id_exist.next()) {
-					//After the id matches we will set the static methods
-					UserAccess.setCustomer_id(Integer.valueOf(entered_id));
-					UserAccess.setCustomer_name(id_exist.getString(2));
-					UserAccess.setAmount(Integer.valueOf(id_exist.getInt(4)));
+				if(idExist.next()) {
 					
-					System.out.println("Customer Found");
+					//After the id matches we will set the static methods
+					UserAccess.setCustomer_id(Integer.valueOf(enteredId));
+					UserAccess.setCustomer_name(idExist.getString(2));
+					UserAccess.setAmount(Integer.valueOf(idExist.getInt(4)));
+					
+					//customer Found
 					// Check if the user is active or not also validate the password
-					if(id_exist.getBoolean(5) && entered_password.equals( id_exist.getString(3))) {
+					if(idExist.getBoolean(5) && enteredPassword.equals( idExist.getString(3))) {
 						
 						
 						//out.print("<body><center><div style=padding:50px;><h1>Hello User Welcome</h1></div></center></body>");
 						out.print("<html><head>\r\n"
 								+ " <link rel=\"stylesheet\" href=\"./CSS/style.css\">\r\n"
 								+ "</head><body><center>"
-								+ "<div class=card ><h1>Hello "+id_exist.getString(2)+" Welcome to JSW</h1></div>"
+								+ "<div class=card ><h1>Hello "+idExist.getString(2)+" Welcome to JSW</h1></div>"
 								+ "<div class= card><div class style= padding-top:50px; ><h1>What are you upto today</h1>\r\n"
 								+ "<form action=\"./DepositServlet\" method=\"post\">\r\n"
 								+ "  <input type=\"number\" id=\"to_deposit\" name=\"to_deposit\" value=\"\">\r\n"
@@ -88,7 +87,7 @@ public class LoginServlet extends HttpServlet {
 					out.print("<body><center><div style=padding:50px;><h1>Customer does not exist</h1></div></center></body>");
 				}
 							
-			}catch(Exception e) {System.out.println("Customer Does Not exist");}
+			}catch(Exception e) {}
 			
 			
 		} catch (ClassNotFoundException e) {

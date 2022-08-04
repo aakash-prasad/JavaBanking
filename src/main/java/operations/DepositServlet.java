@@ -25,32 +25,29 @@ public class DepositServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		// Get the input entered by the user
-		String entered_amount  = request.getParameter("to_deposit");
-		System.out.println("The id entered by user is: "+entered_amount);
+		String enteredAmount  = request.getParameter("to_deposit");
 		
 		//Field validation: cannot be empty and greater then 0
-		if( entered_amount =="") {
+		if( enteredAmount =="") {
 			out.print("<body><center><div style=padding:50px;><h1>Please Enter amount to deposit</h1></div></center></body>");
 		}
-		if(Integer.parseInt(entered_amount)<0) {
+		if(Integer.parseInt(enteredAmount)<0) {
 			out.print("<body><center><div style=padding:50px;><h1>Anmount cannot be less then 0</h1></div></center></body>");
 		}
 		else {
 			
 			//Getting the details of logged in customer
-			int current_balance = UserAccess.getAmount();
-			int current_user = UserAccess.getCustomer_id();
-			int to_be_inserted = current_balance + Integer.valueOf(entered_amount);
-			System.out.println("Current Balance is: "+current_balance);
+			int currentBalance = UserAccess.getAmount();
+			int currentUser = UserAccess.getCustomer_id();
+			int toBeInserted = currentBalance + Integer.valueOf(enteredAmount);
 			
-			System.out.println("To be inserted: "+to_be_inserted);
 			//import the connection and run an insert query
 			try {
 				Connection conn = SqlConnection.initializeDatabase();
 				System.out.println("Object from DepositServlet: "+conn);
 				
-				PreparedStatement update_query_stmt = conn.prepareStatement("UPDATE userData SET balance = "+to_be_inserted+" WHERE customer_id= "+current_user+";");
-				update_query_stmt.executeUpdate();
+				PreparedStatement updateQueryStmt = conn.prepareStatement("UPDATE userData SET balance = "+toBeInserted+" WHERE customer_id= "+currentUser+";");
+				updateQueryStmt.executeUpdate();
 				
 			}catch(Exception e) {System.out.println("There is an exception: "+e);}
 			

@@ -1,7 +1,6 @@
 package landing;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,22 +17,19 @@ public class SignupServlet extends HttpServlet {
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String signup_id  = request.getParameter("signup_customer_id");
-		System.out.println("The id entered by user is: "+signup_id);
-		String signup_password  = request.getParameter("signup_password");
-		System.out.println("The password entered by user is: "+signup_password);
-		String signup_name  = request.getParameter("signup_customer_name");
-		System.out.println("The password entered by user is: "+signup_name);
+		String signupId  = request.getParameter("signup_customer_id");
+		String signupPassword  = request.getParameter("signupPassword");
+		String signupName  = request.getParameter("signup_customer_name");
 		
 		PrintWriter out =response.getWriter();
 		//user validation: if user is entering fields
-		if(signup_id == "") {
+		if(signupId == "") {
 			out.print("<body><center><div style=padding:50px;><h1>Customer id cannot be empty</h1></div></center></body>");
 		}
-		if(signup_password == "" || signup_password.length()<6) {
+		if(signupPassword == "" || signupPassword.length()<6) {
 			out.print("<body><center><div style=padding:50px;><h1>Create a strong password</h1></div></center></body>");
 		}
-		if(signup_name == "") {
+		if(signupName == "") {
 			out.print("<body><center><div style=padding:50px;><h1>Name field cannot be empty</h1></div></center></body>");
 		}
 		
@@ -42,9 +38,9 @@ public class SignupServlet extends HttpServlet {
 				Connection con = SqlConnection.initializeDatabase();
 				
 				PreparedStatement sign_query = con.prepareStatement("insert into userData values(?,?,?,?,?)");
-				sign_query.setInt(1, Integer.valueOf(signup_id));
-				sign_query.setString(2, signup_name);
-				sign_query.setString(3, signup_password);
+				sign_query.setInt(1, Integer.valueOf(signupId));
+				sign_query.setString(2, signupName);
+				sign_query.setString(3, signupPassword);
 				sign_query.setInt(4, 0);
 				sign_query.setBoolean(5, true);
 				

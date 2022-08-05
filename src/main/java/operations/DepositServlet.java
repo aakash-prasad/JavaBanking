@@ -49,6 +49,9 @@ public class DepositServlet extends HttpServlet {
 				PreparedStatement updateQueryStmt = conn.prepareStatement("UPDATE userData SET balance = "+toBeInserted+" WHERE customer_id= "+currentUser+";");
 				updateQueryStmt.executeUpdate();
 				
+				PreparedStatement updateTransactionQuery = conn.prepareStatement("insert into transactions value("+Integer.valueOf(currentUser)+",\"deposit\","+Integer.valueOf(enteredAmount)+", now())");
+				updateTransactionQuery.executeUpdate();
+				
 			}catch(Exception e) {System.out.println("There is an exception: "+e);}
 			
 			

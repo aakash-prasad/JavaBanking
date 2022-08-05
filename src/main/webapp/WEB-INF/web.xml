@@ -27,4 +27,24 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ForgotPassword</display-name>
+    <servlet-name>ForgotPassword</servlet-name>
+    <servlet-class>landing.ForgotPassword</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ForgotPassword</servlet-name>
+    <url-pattern>/ForgotPassword</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayPassword</display-name>
+    <servlet-name>DisplayPassword</servlet-name>
+    <servlet-class>landing.DisplayPassword</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayPassword</servlet-name>
+    <url-pattern>/DisplayPassword</url-pattern>
+  </servlet-mapping>
 </web-app>

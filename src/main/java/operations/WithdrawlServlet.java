@@ -55,10 +55,15 @@ public class WithdrawlServlet extends HttpServlet {
 					PreparedStatement update_query_stmt = conn.prepareStatement("UPDATE userData SET balance = "+to_be_inserted+" WHERE customer_id= "+currentUser+";");
 					update_query_stmt.executeUpdate();
 					
+					PreparedStatement updateTransactionQuery = conn.prepareStatement("insert into transactions value("+Integer.valueOf(currentUser)+",\"withdraw\","+Integer.valueOf(enteredAmount)+", now())");
+					updateTransactionQuery.executeUpdate();
+					System.out.println("Transaction working");
+					
 				}catch(Exception e) {System.out.println("");}
 				
 				
 				out.print("<html><head><link rel=\"stylesheet\" href=\"./CSS/style.css\"></head><body><center><div class = card><div style= padding-top:10px;><h2>Withdraw Succesful</h2></div></div></center><</body><html>");
+				
 			}
 			
 		}

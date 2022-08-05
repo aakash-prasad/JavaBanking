@@ -45,7 +45,7 @@ public class SignupServlet extends HttpServlet {
 				sign_query.setBoolean(5, true);
 				
 				sign_query.executeUpdate();
-				System.out.println("User created success");
+				// user created
 			} catch (ClassNotFoundException e) {
 				System.out.println("error creating user");
 			} catch (SQLException e) {
